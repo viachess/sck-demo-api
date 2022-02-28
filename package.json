@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "morgan": "^1.10.0",
+    "ws": "^8.5.0"
+  },
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=production CORS_ORIGIN=mystifying-borg-10258c node src/server.js",
+    "dev": "cross-env NODE_ENV=development PORT=4422 CORS_ORIGIN=localhost nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
