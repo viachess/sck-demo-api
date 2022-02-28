@@ -13,7 +13,7 @@
     "nodemon": "^2.0.15"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=production CORS_ORIGIN=mystifying-borg-10258c node src/server.js",
+    "start": "node src/server.js",
     "dev": "cross-env NODE_ENV=development PORT=4422 CORS_ORIGIN=localhost nodemon src/server.js"
   },
   "keywords": [],
