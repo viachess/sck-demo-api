@@ -16,11 +16,7 @@ const server = http.createServer(app);
 
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ server });
-// const mockData = require("../mockData.json");
-
-const path = require("path");
-const parseCsv = require("../generator.js");
-const mockCsvFilePath = path.join(__dirname, "..", "csvData.csv");
+const mockData = require("../mockData.json");
 
 const parseMessage = (msg) => {
   return JSON.parse(msg);
@@ -35,11 +31,6 @@ let currentChunkSize = null;
 let lastIndex = 0;
 
 wss.on("connection", (ws) => {
-  // console.log("parsing result");
-  // console.log("mockData");
-  // console.log(typeof mockData);
-  // console.log(Array.isArray(mockData));
-
   const datasetLength = mockData.length;
   console.log("connection established");
   ws.on("message", (message) => {
@@ -74,7 +65,7 @@ wss.on("connection", (ws) => {
       if (lastIndex > datasetLength) {
         lastIndex = chunkSize;
         sendMessage(ws, {
-          data: mockData.slice(1, lastIndex),
+          data: mockData.slice(0, lastIndex),
         });
       } else {
         sendMessage(ws, {
@@ -95,36 +86,8 @@ wss.on("connection", (ws) => {
 // });
 
 const PORT = process.env.PORT;
-const CsvParser = require("csv-parse");
-const { parse } = CsvParser;
 
-const fs = require("fs");
-const fsPromises = fs.promises;
-
-server.listen(PORT, async () => {
-  const records = [];
-  // Initialize the parser
-  console.log("parsing initialized");
-  const parser = parse();
-  // Use the readable stream api to consume records
-  parser.on("readable", function () {
-    let record;
-    while ((record = parser.read()) !== null) {
-      records.push(record);
-    }
-  });
-  // Catch any error
-  parser.on("error", function (err) {
-    console.error(err.message);
-  });
-  parser.on("end", function () {
-    console.log("parsing done");
-  });
-  const csvFile = await fsPromises.readFile(mockCsvFilePath);
-  parser.write(csvFile);
-  parser.end();
-  mockData = records;
-
+server.listen(PORT, () => {
   console.log(`Server runs on port ${PORT}`);
 });
 // server.on("upgrade", (request, socket, head) => {
