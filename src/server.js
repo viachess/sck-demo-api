@@ -1,6 +1,6 @@
 const express = require("express");
 // const chartRoute = require("./routes/chart");
-const websocket = require("./socket");
+const websocket = require("./socket/index");
 const app = express();
 
 const middlewareSetup = require("./middlewares");
